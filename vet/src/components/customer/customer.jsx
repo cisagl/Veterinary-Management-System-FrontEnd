@@ -26,7 +26,7 @@ const Customer = () => {
   }, []);
 
   const fetchCustomers = () => {
-    axios.get('http://localhost:8080/v1/customers/all')
+    axios.get('https://veterinary-management-system.onrender.com/v1/customers/all')
       .then(response => {
         setCustomers(response.data);
         noti("Customer table listed successfully!", "success");
@@ -39,7 +39,7 @@ const Customer = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`http://localhost:8080/v1/customers/delete/${id}`)
+      axios.delete(`https://veterinary-management-system.onrender.com/v1/customers/delete/${id}`)
         .then(response => {
           setCustomers(customers.filter(customer => customer.id !== id));
           noti("Customer removed successfully!", "success");
@@ -75,7 +75,7 @@ const Customer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8080/v1/customers/save', formData)
+    axios.post('https://veterinary-management-system.onrender.com/v1/customers/save', formData)
       .then(response => {
         fetchCustomers();
         setFormData({
@@ -94,7 +94,7 @@ const Customer = () => {
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:8080/v1/customers/update/${selectedCustomerId}`, {
+    axios.put(`https://veterinary-management-system.onrender.com/v1/customers/update/${selectedCustomerId}`, {
       name: formData.nameUpdate,
       phone: formData.phoneUpdate,
       address: formData.addressUpdate,

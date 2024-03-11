@@ -31,7 +31,7 @@ const Report = () => {
   }, []);
 
   const fetchreports = () => {
-    axios.get('http://localhost:8080/v1/reports/all')
+    axios.get('https://veterinary-management-system.onrender.com/v1/reports/all')
       .then(response => {
         setreports(response.data);
         noti("Report table listed successfully!", "success");
@@ -43,7 +43,7 @@ const Report = () => {
   };
 
   const fetchappointments = () => {
-    axios.get('http://localhost:8080/v1/appointments/all')
+    axios.get('https://veterinary-management-system.onrender.com/v1/appointments/all')
       .then(response => {
         setappointments(response.data);
       })
@@ -55,7 +55,7 @@ const Report = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`http://localhost:8080/v1/reports/delete/${id}`)
+      axios.delete(`https://veterinary-management-system.onrender.com/v1/reports/delete/${id}`)
         .then(response => {
           setreports(reports.filter(report => report.id !== id));
           noti("Report removed successfully!", "success");
@@ -89,7 +89,7 @@ const Report = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8080/v1/reports/save', formData)
+    axios.post('https://veterinary-management-system.onrender.com/v1/reports/save', formData)
       .then(response => {
         fetchreports();
         setFormData({
@@ -108,7 +108,7 @@ const Report = () => {
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:8080/v1/reports/update/${selectedreportId}`, updateFormData)
+    axios.put(`https://veterinary-management-system.onrender.com/v1/reports/update/${selectedreportId}`, updateFormData)
       .then(response => {
         fetchreports();
         setUpdateFormData({  

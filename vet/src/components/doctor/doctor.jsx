@@ -27,7 +27,7 @@ const Doctor = () => {
   }, []);
 
   const fetchdoctors = () => {
-    axios.get('http://localhost:8080/v1/doctors/all')
+    axios.get('https://veterinary-management-system.onrender.com/v1/doctors/all')
       .then(response => {
         setdoctors(response.data);
         noti("Doctor table listed successfully!", "success");
@@ -40,7 +40,7 @@ const Doctor = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`http://localhost:8080/v1/doctors/delete/${id}`)
+      axios.delete(`https://veterinary-management-system.onrender.com/v1/doctors/delete/${id}`)
         .then(response => {
           setdoctors(doctors.filter(doctor => doctor.id !== id));
           noti("Doctor removed successfully!", "success");
@@ -76,7 +76,7 @@ const Doctor = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8080/v1/doctors/save', formData)
+    axios.post('https://veterinary-management-system.onrender.com/v1/doctors/save', formData)
       .then(response => {
         fetchdoctors();
         setFormData({
@@ -95,7 +95,7 @@ const Doctor = () => {
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:8080/v1/doctors/update/${selecteddoctorId}`, {
+    axios.put(`https://veterinary-management-system.onrender.com/v1/doctors/update/${selecteddoctorId}`, {
       name: formData.nameUpdate,
       phone: formData.phoneUpdate,
       address: formData.addressUpdate,

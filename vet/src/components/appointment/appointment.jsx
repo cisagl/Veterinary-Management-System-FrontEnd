@@ -32,7 +32,7 @@ const Appointment = () => {
   }, []);
 
   const fetchappointments = () => {
-    axios.get('http://localhost:8080/v1/appointments/all')
+    axios.get('https://veterinary-management-system.onrender.com/v1/appointments/all')
       .then(response => {
         setappointments(response.data);
         noti("Appointment table listed successfully!", "success");
@@ -43,7 +43,7 @@ const Appointment = () => {
   };
 
   const fetchAnimals = () => {
-    axios.get('http://localhost:8080/v1/animals/all')
+    axios.get('https://veterinary-management-system.onrender.com/v1/animals/all')
       .then(response => {
         setanimals(response.data);
       })
@@ -53,7 +53,7 @@ const Appointment = () => {
   };
 
   const fetchDoctors = () => {
-    axios.get('http://localhost:8080/v1/doctors/all')
+    axios.get('https://veterinary-management-system.onrender.com/v1/doctors/all')
       .then(response => {
         setdoctors(response.data);
       })
@@ -65,7 +65,7 @@ const Appointment = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`http://localhost:8080/v1/appointments/delete/${id}`)
+      axios.delete(`https://veterinary-management-system.onrender.com/v1/appointments/delete/${id}`)
         .then(response => {
           setappointments(appointments.filter(appointment => appointment.id !== id));
           noti("Appointment removed successfully!", "success");
@@ -99,7 +99,7 @@ const Appointment = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8080/v1/appointments/save', formData)
+    axios.post('https://veterinary-management-system.onrender.com/v1/appointments/save', formData)
       .then(response => {
         fetchappointments();
         setFormData({
@@ -116,7 +116,7 @@ const Appointment = () => {
   
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:8080/v1/appointments/update/${selectedappointmentId}`, updateFormData)
+    axios.put(`https://veterinary-management-system.onrender.com/v1/appointments/update/${selectedappointmentId}`, updateFormData)
       .then(response => {
         fetchappointments();
         setUpdateFormData({  
