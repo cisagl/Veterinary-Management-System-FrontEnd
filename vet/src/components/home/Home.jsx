@@ -5,7 +5,7 @@ const App = () => {
     <div className="home">
       <div className="container">
         <h1 className="heading">Welcome to the Veterinary Management System</h1>
-        <p className="description">Thank you for choosing our comprehensive Veterinary Management System (VMS) to streamline your clinic's operations. Our platform offers a wide range of features designed to optimize the management of your veterinary practice.</p>
+        <p className="description">Our platform, Veterinary Management System (VMS) offers a wide range of features designed to optimize the management of your veterinary practice.</p>
         
         <h2 className="subheading">Key Features</h2>
         <ul className="feature-list">
@@ -24,9 +24,7 @@ const App = () => {
         <p className="description">To begin using the Veterinary Management System, simply explore the options available in the navigation bar above. Whether you need to schedule appointments, update patient records, or generate reports, our system has you covered.</p>
         
         <p className="description">If you have any questions or require assistance, don't hesitate to reach out to our support team. We're here to help you make the most of our system and ensure the smooth operation of your veterinary clinic.</p>
-        
-        <p className="description">Thank you for choosing VMS. We look forward to helping you manage your clinic more effectively and provide the best possible care to your patients.</p>
-      </div>
+              </div>
     </div>
   );
 };
