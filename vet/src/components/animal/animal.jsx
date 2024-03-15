@@ -196,7 +196,7 @@ const Animal = () => {
                   <td>{item.gender}</td>
                   <td>{item.dateOfBirth}</td>
                   <td>{item.color}</td>
-                  <td>{item.customerId}</td>
+                  <td>{item.customer}</td>
                   <td><button className='remove' onClick={() => handleDelete(item.id)}><IoIosRemoveCircle /></button></td>
                   <td><button className='update' onClick={() => handleUpdateClick(item.id)}><FaRegEdit /></button></td>
                 </tr>
@@ -225,7 +225,7 @@ const Animal = () => {
               </div>
               <input type="text" name='color' value={updateFormData.color} onChange={(e) => setUpdateFormData({...updateFormData, color: e.target.value})} placeholder="Color" />
 
-              <select name='customerId' value={updateFormData.customerId} onChange={(e) => setUpdateFormData({...updateFormData, customerId: e.target.value})}>
+              <select name='customerId' value={updateFormData.customer} onChange={(e) => setUpdateFormData({...updateFormData, customer: {id: e.target.value}})}>
                 <option value="">Select Customer</option>
                 {customers.map(customer => (
                   <option key={customer.id} value={customer.id}>{customer.name}</option>
@@ -254,7 +254,7 @@ const Animal = () => {
             </div>
             
             <input type="text" name='color' value={formData.color} onChange={handleChange} placeholder="Color" />
-            <select name='customerId' value={formData.customerId} onChange={handleChange}>
+            <select name='customerId' value={formData.customer} onChange={handleChange}>
                 <option value="">Select Customer</option>
                 {customers.map(customer => (
                   <option key={customer.id} value={customer.id}>{customer.name}</option>
