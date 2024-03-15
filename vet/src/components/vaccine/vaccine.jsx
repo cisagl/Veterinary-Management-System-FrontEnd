@@ -37,10 +37,9 @@ const Vaccine = () => {
   }, []);
 
   const fetchVaccines = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/vaccines/all')
+    axios.get('http://localhost:8080/v1/vaccines/all')
       .then(response => {
         setVaccines(response.data);
-        noti("Vaccine table listed successfully!", "success");
       })
       .catch(error => {
         noti(error.response.data.message, "error");      
@@ -48,7 +47,7 @@ const Vaccine = () => {
   };
 
   const fetchReports = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/reports/all')
+    axios.get('http://localhost:8080/v1/reports/all')
       .then(response => {
         setReports(response.data);
       })
@@ -58,7 +57,7 @@ const Vaccine = () => {
   };
 
   const fetchAnimals = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/animals/all')
+    axios.get('http://localhost:8080/v1/animals/all')
       .then(response => {
         setanimals(response.data);
       })
@@ -70,7 +69,7 @@ const Vaccine = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`https://veterinary-management-system.onrender.com/v1/vaccines/delete/${id}`)
+      axios.delete(`http://localhost:8080/v1/vaccines/delete/${id}`)
         .then(response => {
           setVaccines(vaccines.filter(vaccine => vaccine.id !== id));
           noti("Vaccine removed successfully!", "success");
@@ -106,7 +105,7 @@ const Vaccine = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('https://veterinary-management-system.onrender.com/v1/vaccines/save', formData)
+    axios.post('http://localhost:8080/v1/vaccines/save', formData)
       .then(response => {
         fetchVaccines();
         setFormData({
@@ -128,7 +127,7 @@ const Vaccine = () => {
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`https://veterinary-management-system.onrender.com/v1/vaccines/update/${selectedvaccineId}`, updateFormData)
+    axios.put(`http://localhost:8080/${selectedvaccineId}`, updateFormData)
       .then(response => {
         fetchVaccines();
         setUpdateFormData({  

@@ -198,6 +198,7 @@ input {
     align-items: center;
     justify-content: center;
     height: 100vh;
+    z-index: -1;
 }
 
 .home {
@@ -206,10 +207,42 @@ input {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+
+
 .title {
     font-weight: bold;
 }
 
 .availableDate {
     margin-top: 50px;
+}
+
+.searchForm {
+    display: flex;
+    width: 80%;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.searchForm input {
+    width: 15%;
+}
+
+.searchForm button {
+    background-color: rgb(39, 150, 184);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 7%;
+}
+
+.searchForm button:hover {
+    background-color: rgb(149, 241, 255);
+    color: black;
 }

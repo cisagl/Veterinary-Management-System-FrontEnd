@@ -28,11 +28,9 @@ const AvailableDate = () => {
   }, []);
 
   const fetchAvailableDates = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/available-dates/all')
+    axios.get('http://localhost:8080/v1/available-dates/all')
       .then(response => {
         setAvailableDates(response.data);
-        noti("Available Date table listed successfully!", "success");
-
       })
       .catch(error => {
         noti(error.response.data.message, "error");      
@@ -40,7 +38,7 @@ const AvailableDate = () => {
   };
 
   const fetchDoctors = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/doctors/all')
+    axios.get('http://localhost:8080/v1/doctors/all')
       .then(response => {
         setDoctors(response.data);
       })
@@ -52,7 +50,7 @@ const AvailableDate = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`https://veterinary-management-system.onrender.com/v1/available-dates/delete/${id}`)
+      axios.delete(`http://localhost:8080/v1/available-dates/delete/${id}`)
         .then(response => {
           setAvailableDates(availableDates.filter(availableDate => availableDate.id !== id));
           noti("Available Date removed successfully!", "success");
@@ -84,7 +82,7 @@ const AvailableDate = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('https://veterinary-management-system.onrender.com/v1/available-dates/save', formData)
+    axios.post('http://localhost:8080/v1/available-dates/save', formData)
       .then(response => {
         fetchAvailableDates();
         setFormData({
@@ -101,7 +99,7 @@ const AvailableDate = () => {
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`https://veterinary-management-system.onrender.com/v1/available-dates/update/${selectedAvailableDateId}`, updateFormData)
+    axios.put(`http://localhost:8080/v1/available-dates/update/${selectedAvailableDateId}`, updateFormData)
       .then(response => {
         fetchAvailableDates();
         setUpdateFormData({  

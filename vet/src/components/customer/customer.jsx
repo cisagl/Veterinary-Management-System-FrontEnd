@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { IoIosCloseCircle } from "react-icons/io";
-import Table from '../table/table';
+import { IoIosCloseCircle, IoIosRemoveCircle} from "react-icons/io";
+import { FaRegEdit } from "react-icons/fa";
+import '../../table.css'
 import cities from '../../assets/cities.jsx'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -18,6 +19,8 @@ const Customer = () => {
   });
   const [selectedCustomerId, setSelectedCustomerId] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [search, setSearch] = useState('');
+  const [searchResult, setSearchResult] = useState([]);
 
   const noti = (message, type) => toast(message, { type });
 
@@ -26,10 +29,10 @@ const Customer = () => {
   }, []);
 
   const fetchCustomers = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/customers/all')
+    axios.get('http://localhost:8080/v1/customers/all')
       .then(response => {
         setCustomers(response.data);
-        noti("Customer table listed successfully!", "success");
+        setSearchResult(response.data);
       })
       .catch(error => {
         noti(error.response.data.message, "error");      
@@ -39,7 +42,7 @@ const Customer = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`https://veterinary-management-system.onrender.com/v1/customers/delete/${id}`)
+      axios.delete(`http://localhost:8080/v1/customers/delete/${id}`)
         .then(response => {
           setCustomers(customers.filter(customer => customer.id !== id));
           noti("Customer removed successfully!", "success");
@@ -65,7 +68,6 @@ const Customer = () => {
     }
   };
   
-
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -75,7 +77,7 @@ const Customer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('https://veterinary-management-system.onrender.com/v1/customers/save', formData)
+    axios.post('http://localhost:8080/v1/customers/save', formData)
       .then(response => {
         fetchCustomers();
         setFormData({
@@ -94,7 +96,7 @@ const Customer = () => {
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`https://veterinary-management-system.onrender.com/v1/customers/update/${selectedCustomerId}`, {
+    axios.put(`http://localhost:8080/v1/customers/update/${selectedCustomerId}`, {
       name: formData.nameUpdate,
       phone: formData.phoneUpdate,
       address: formData.addressUpdate,
@@ -118,22 +120,79 @@ const Customer = () => {
       noti(error.response.data.message, "error");    
     });
   };
-  
 
   const handleUpdateClose = () => {
     setShowUpdateForm(false);
   };
 
+  const searchByName = (e) => {
+    e.preventDefault();
+    if (search !== '') {
+      axios.get(`http://localhost:8080/v1/customers/name?name=${search}`)
+        .then(response => {
+          if (Array.isArray(response.data)) {
+            setSearchResult(response.data);
+            noti("Search results updated successfully!", "success");
+          } else if (typeof response.data === 'object') { 
+            setSearchResult([response.data]); 
+            noti("Search results updated successfully!", "success");
+          } else {
+            setSearchResult([]);
+            noti("No results found!", "warning");
+          }
+        })
+        .catch(error => {
+          noti(error.response.data.message, "error");
+        });
+    } else {
+      noti("Please enter a name to search!", "error");
+      fetchCustomers();
+    }
+  };
+  
   return (
     <div>
       <div className="container">
         <h3 className='item-title'>Customer Panel</h3>
 
-        <Table 
-          data={customers} 
-          onDelete={handleDelete} 
-          onUpdateClick={handleUpdateClick} 
-        />
+
+          <form className='searchForm' onSubmit={searchByName}>
+            <input 
+              type="text" 
+              placeholder='Search by name' 
+              value={search} 
+              onChange={(e) => setSearch(e.target.value)} 
+            />
+            <button type='submit'>Search</button>
+          </form>
+
+
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>City</th>
+              <th>Delete</th>
+              <th>Update</th>
+            </tr>
+          </thead>
+          <tbody>
+          {searchResult.map(item => (
+            <tr key={item.id} className='item-data'>
+              <td>{item.name}</td>
+              <td>{item.phone}</td>
+              <td>{item.mail}</td>
+              <td>{item.address}</td>
+              <td>{item.city}</td>
+              <td><button className='remove' onClick={() => onDelete(item.id)}><IoIosRemoveCircle /></button></td>
+              <td><button className='update' onClick={() => onUpdateClick(item.id)}><FaRegEdit /></button></td>
+            </tr>
+          ))}
+          </tbody>
+        </table>
 
         <ToastContainer />
 

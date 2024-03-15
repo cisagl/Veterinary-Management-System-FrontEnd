@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { IoIosCloseCircle, IoIosRemoveCircle } from "react-icons/io";
 import { FaRegEdit } from "react-icons/fa";
@@ -7,67 +7,86 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Animal = () => {
   const [animals, setAnimals] = useState([]);
-  const [customers, setCustomers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredAnimals, setFilteredAnimals] = useState([]);
   const [formData, setFormData] = useState({
-    name: null,
-    species: null,
-    breed: null,
-    gender: null,
-    dateOfBirth: null,
-    color: null,
-    customer: ''
+    name: '',
+    species: '',
+    breed: '',
+    gender: '',
+    dateOfBirth: '',
+    color: '',
+    customerId: ''
   });
   const [selectedAnimalId, setSelectedAnimalId] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [updateFormData, setUpdateFormData] = useState({
-    name: null,
-    species: null,
-    breed: null,
-    gender: null,
-    dateOfBirth: null,
-    color: null,
-    customer: ''
+    name: '',
+    species: '',
+    breed: '',
+    gender: '',
+    dateOfBirth: '',
+    color: '',
+    customerId: ''
   });
-
+  const [customers, setCustomers] = useState([]);
   const noti = (message, type) => toast(message, { type });
-
 
   useEffect(() => {
     fetchAnimals();
     fetchCustomers();
   }, []);
 
+  const fetchAnimals = () => {
+    axios.get('http://localhost:8080/v1/animals/all')
+      .then(response => {
+        setAnimals(response.data);
+        setFilteredAnimals(response.data);
+      })
+      .catch(error => {
+        noti(error.response.data.message, "error");
+      });
+  };
+
   const fetchCustomers = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/customers/all')
+    axios.get('http://localhost:8080/v1/customers/all')
       .then(response => {
         setCustomers(response.data);
       })
       .catch(error => {
-        noti(error.response.data.message, "error");      
+        noti(error.response.data.message, "error");
       });
   };
 
-  const fetchAnimals = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/animals/all')
-      .then(response => {
-        setAnimals(response.data);
-        noti("Animal table listed successfully!", "success");
-      })
-      .catch(error => {
-        noti(error.response.data.message, "error");      
-      });
+  const searchByName = (e) => {
+    e.preventDefault();
+    if (!searchTerm) {
+      noti("Please enter a name to search!", "error");
+      setFilteredAnimals(animals);
+      return;
+    }
+    const filtered = animals.filter(animal =>
+      animal.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredAnimals(filtered);
+    if (filtered.length === 0) {
+      noti("No results found!", "warning");
+    } else {
+      noti("Search results updated successfully!", "success");
+    }
   };
 
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`https://veterinary-management-system.onrender.com/v1/animals/delete/${id}`)
+      axios.delete(`http://localhost:8080/v1/animals/delete/${id}`)
         .then(response => {
           setAnimals(animals.filter(animal => animal.id !== id));
+          setFilteredAnimals(filteredAnimals.filter(animal => animal.id !== id));
           noti("Animal removed successfully!", "success");
         })
         .catch(error => {
-          noti(error.response.data.message, "error");      
+          noti(error.response.data.message, "error");
         });
     }
   };
@@ -83,7 +102,7 @@ const Animal = () => {
         gender: selectedAnimal.gender,
         dateOfBirth: selectedAnimal.dateOfBirth,
         color: selectedAnimal.color,
-        customer: selectedAnimal.customer
+        customerId: selectedAnimal.customerId
       });
       setShowUpdateForm(true);
     }
@@ -98,54 +117,59 @@ const Animal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('https://veterinary-management-system.onrender.com/v1/animals/save', formData)
+    axios.post('http://localhost:8080/v1/animals/save', formData)
       .then(response => {
         fetchAnimals();
         setFormData({
-          name: null,
-          species: null,
-          breed: null,
-          gender: null,
-          dateOfBirth: null,
-          color: null,
-          customer: ''
+          name: '',
+          species: '',
+          breed: '',
+          gender: '',
+          dateOfBirth: '',
+          color: '',
+          customerId: ''
         });
         noti("Animal added successfully!", "success");
       })
       .catch(error => {
-        noti(error.response.data.message, "error");      
+        noti(error.response.data.message, "error");
       });
   };
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`https://veterinary-management-system.onrender.com/v1/animals/update/${selectedAnimalId}`, updateFormData)
+    axios.put(`http://localhost:8080/v1/animals/update/${selectedAnimalId}`, updateFormData)
       .then(response => {
         noti("Animal updated successfully!", "success");
         fetchAnimals();
         setShowUpdateForm(false);
       })
       .catch(error => {
-        noti(error.response.data.message, "error");      
+        noti(error.response.data.message, "error");
       });
   };
-  
+
 
   const handleUpdateClose = () => {
     setShowUpdateForm(false);
   };
 
-  const handleCustomerChange = (e) => {
-    setFormData({
-      ...formData,
-      customer: {id: e.target.value}
-    });
-  };
+
 
   return (
     <div>
       <div className="container">
         <h3 className='item-title'>Animal Panel</h3>
+
+        <form onSubmit={searchByName} className='searchForm'>
+          <input 
+            type="text" 
+            placeholder='Search by name' 
+            value={searchTerm} 
+            onChange={(e) => setSearchTerm(e.target.value)} 
+          />
+          <button type='submit'>Search</button>
+        </form>
 
         <ToastContainer />
 
@@ -164,19 +188,20 @@ const Animal = () => {
             </tr>
           </thead>
           <tbody>
-            {animals.map(item => (
-              <tr key={item.id} className='item-data'>
-                <td>{item.name}</td>
-                <td>{item.species}</td>
-                <td>{item.breed}</td>
-                <td>{item.gender}</td>
-                <td>{item.dateOfBirth}</td>
-                <td>{item.color}</td>
-                <td>{item.customer.name}</td>
-                <td><button className='remove' onClick={() => handleDelete(item.id)}><IoIosRemoveCircle /></button></td>
-                <td><button className='update' onClick={() => handleUpdateClick(item.id)}><FaRegEdit /></button></td>
-              </tr>
-            ))}
+            {filteredAnimals.map(item => (
+                <tr key={item.id} className='item-data'>
+                  <td>{item.name}</td>
+                  <td>{item.species}</td>
+                  <td>{item.breed}</td>
+                  <td>{item.gender}</td>
+                  <td>{item.dateOfBirth}</td>
+                  <td>{item.color}</td>
+                  <td>{item.customerId}</td>
+                  <td><button className='remove' onClick={() => handleDelete(item.id)}><IoIosRemoveCircle /></button></td>
+                  <td><button className='update' onClick={() => handleUpdateClick(item.id)}><FaRegEdit /></button></td>
+                </tr>
+              ))
+            }
           </tbody>
         </table>
 
@@ -200,7 +225,7 @@ const Animal = () => {
               </div>
               <input type="text" name='color' value={updateFormData.color} onChange={(e) => setUpdateFormData({...updateFormData, color: e.target.value})} placeholder="Color" />
 
-              <select name='customer' value={updateFormData.customer.id} onChange={(e) => setUpdateFormData({...updateFormData, customer: {id: e.target.value}})}>
+              <select name='customerId' value={updateFormData.customerId} onChange={(e) => setUpdateFormData({...updateFormData, customerId: e.target.value})}>
                 <option value="">Select Customer</option>
                 {customers.map(customer => (
                   <option key={customer.id} value={customer.id}>{customer.name}</option>
@@ -229,7 +254,7 @@ const Animal = () => {
             </div>
             
             <input type="text" name='color' value={formData.color} onChange={handleChange} placeholder="Color" />
-            <select name='customer' value={formData.customer.name} onChange={handleCustomerChange}>
+            <select name='customerId' value={formData.customerId} onChange={handleChange}>
                 <option value="">Select Customer</option>
                 {customers.map(customer => (
                   <option key={customer.id} value={customer.id}>{customer.name}</option>
