@@ -1,5 +1,5 @@
 .home {
-    margin-top: 200px;
+    margin-top: 190px;
     padding: 50px;
     text-align: center;
   }
@@ -9,35 +9,34 @@
     margin: 0 auto;
   }
   
-  h1 {
+  .heading {
     font-size: 2.5rem;
     margin-bottom: 30px;
   }
   
-  h2 {
+  .subheading {
     font-size: 1.8rem;
     margin-top: 40px;
   }
   
-  p {
+  .description {
     font-size: 1.1rem;
     line-height: 1.6;
     margin-bottom: 20px;
   }
   
-  ul {
+  .feature-list {
     text-align: left;
     margin-left: 0;
     padding-left: 20px;
   }
   
-  li {
+  .feature-item {
     font-size: 1.1rem;
     margin-bottom: 15px;
   }
   
-  strong {
+  .feature-item strong {
     font-weight: bold;
   }
-  
   
