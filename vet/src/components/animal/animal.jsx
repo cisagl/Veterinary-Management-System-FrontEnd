@@ -135,7 +135,7 @@ const Animal = () => {
           gender: '',
           dateOfBirth: '',
           color: '',
-          customer: {id: ''},
+          customer: ''
         });
         noti("Animal added successfully!", "success");
       })
@@ -204,7 +204,7 @@ const Animal = () => {
                   <td>{item.gender}</td>
                   <td>{item.dateOfBirth}</td>
                   <td>{item.color}</td>
-                  <td>{item.customer}</td>
+                  <td>{item.customer.name}</td>
                   <td><button className='remove' onClick={() => handleDelete(item.id)}><IoIosRemoveCircle /></button></td>
                   <td><button className='update' onClick={() => handleUpdateClick(item.id)}><FaRegEdit /></button></td>
                 </tr>
@@ -233,16 +233,12 @@ const Animal = () => {
               </div>
               <input type="text" name='color' value={updateFormData.color} onChange={(e) => setUpdateFormData({...updateFormData, color: e.target.value})} placeholder="Color" />
 
-              <select
-                name='customerId'
-                value={updateFormData.customer.id} // Assuming the value is the customer ID
-                onChange={(e) => setUpdateFormData({ ...updateFormData, customer: { id: e.target.value } })}>
+              <select name='customer' value={updateFormData.customer} onChange={(e) => setUpdateFormData({...updateFormData, customer: {id:e.target.value}})}>
                 <option value="">Select Customer</option>
                 {customers.map(customer => (
                   <option key={customer.id} value={customer.id}>{customer.name}</option>
                 ))}
               </select>
-
 
               <button className='item-update-button' type="submit">Update</button>
             </form>
@@ -266,17 +262,12 @@ const Animal = () => {
             </div>
             
             <input type="text" name='color' value={formData.color} onChange={handleChange} placeholder="Color" />
-
-            <select
-              name='customerId'
-              value={formData.customer.id} // Assuming the value is the customer ID
-              onChange={handleChange}>
-              <option value="">Select Customer</option>
-              {customers.map(customer => (
-                <option key={customer.id} value={customer.id}>{customer.name}</option>
-              ))}
+            <select name='customer' value={formData.customer.id} onChange={handleChange}>
+                <option value="">Select Customer</option>
+                {customers.map(customer => (
+                  <option key={customer.id} value={customer.id}>{customer.name}</option>
+                ))}
             </select>
-
             <button className='item-add-button' type="submit">Add</button>
           </form>
         </div>
