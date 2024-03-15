@@ -233,7 +233,7 @@ const Animal = () => {
               </div>
               <input type="text" name='color' value={updateFormData.color} onChange={(e) => setUpdateFormData({...updateFormData, color: e.target.value})} placeholder="Color" />
 
-              <select name='customer' value={updateFormData.customer} onChange={(e) => setUpdateFormData({...updateFormData, customer: {id:e.target.value}})}>
+              <select name='customer' value={updateFormData.customer.name} onChange={(e) => setUpdateFormData({...updateFormData, customer: {id:e.target.value}})}>
                 <option value="">Select Customer</option>
                 {customers.map(customer => (
                   <option key={customer.id} value={customer.id}>{customer.name}</option>
