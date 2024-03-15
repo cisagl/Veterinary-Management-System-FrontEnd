@@ -16,7 +16,7 @@ const Animal = () => {
     gender: '',
     dateOfBirth: '',
     color: '',
-    customerId: ''
+    customer: ''
   });
   const [selectedAnimalId, setSelectedAnimalId] = useState(null);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
@@ -27,7 +27,7 @@ const Animal = () => {
     gender: '',
     dateOfBirth: '',
     color: '',
-    customerId: ''
+    customer: ''
   });
   const [customers, setCustomers] = useState([]);
   const noti = (message, type) => toast(message, { type });
@@ -102,7 +102,7 @@ const Animal = () => {
         gender: selectedAnimal.gender,
         dateOfBirth: selectedAnimal.dateOfBirth,
         color: selectedAnimal.color,
-        customerId: selectedAnimal.customerId
+        customer: {id: selectedAnimal.customer}
       });
       setShowUpdateForm(true);
     }
@@ -127,7 +127,7 @@ const Animal = () => {
           gender: '',
           dateOfBirth: '',
           color: '',
-          customerId: ''
+          customer: {id: ''},
         });
         noti("Animal added successfully!", "success");
       })
