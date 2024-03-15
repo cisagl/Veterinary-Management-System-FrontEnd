@@ -38,7 +38,7 @@ const Animal = () => {
   }, []);
 
   const fetchAnimals = () => {
-    axios.get('http://localhost:8080/v1/animals/all')
+    axios.get('https://veterinary-management-system.onrender.com/v1/animals/all')
       .then(response => {
         setAnimals(response.data);
         setFilteredAnimals(response.data);
@@ -49,7 +49,7 @@ const Animal = () => {
   };
 
   const fetchCustomers = () => {
-    axios.get('http://localhost:8080/v1/customers/all')
+    axios.get('https://veterinary-management-system.onrender.com/v1/customers/all')
       .then(response => {
         setCustomers(response.data);
       })
@@ -79,7 +79,7 @@ const Animal = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`http://localhost:8080/v1/animals/delete/${id}`)
+      axios.delete(`https://veterinary-management-system.onrender.com/v1/animals/delete/${id}`)
         .then(response => {
           setAnimals(animals.filter(animal => animal.id !== id));
           setFilteredAnimals(filteredAnimals.filter(animal => animal.id !== id));
@@ -117,7 +117,7 @@ const Animal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8080/v1/animals/save', formData)
+    axios.post('https://veterinary-management-system.onrender.com/v1/animals/save', formData)
       .then(response => {
         fetchAnimals();
         setFormData({
@@ -138,7 +138,7 @@ const Animal = () => {
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost:8080/v1/animals/update/${selectedAnimalId}`, updateFormData)
+    axios.put(`https://veterinary-management-system.onrender.com/v1/animals/update/${selectedAnimalId}`, updateFormData)
       .then(response => {
         noti("Animal updated successfully!", "success");
         fetchAnimals();
