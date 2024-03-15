@@ -1,6 +1,6 @@
 .home {
-    padding: 20px;
-    background-color: #f9f9f9;
+    padding: 50px;
+    text-align: center;
   }
   
   .container {
@@ -8,33 +8,35 @@
     margin: 0 auto;
   }
   
-  .home h1 {
+  h1 {
     font-size: 2.5rem;
+    margin-bottom: 30px;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    margin-top: 40px;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    line-height: 1.6;
     margin-bottom: 20px;
   }
   
-  .home h2 {
-    font-size: 1.8rem;
-    margin-top: 40px;
+  ul {
+    text-align: left;
+    margin-left: 0;
+    padding-left: 20px;
+  }
+  
+  li {
+    font-size: 1.1rem;
     margin-bottom: 15px;
   }
   
-  .home p {
-    font-size: 1.2rem;
-    line-height: 1.6;
-    margin-bottom: 15px;
-  }
-  
-  .home ul {
-    list-style-type: none;
-    padding-left: 0;
-  }
-  
-  .home li {
-    margin-bottom: 10px;
-  }
-  
-  .home li strong {
+  strong {
     font-weight: bold;
   }
+  
   
