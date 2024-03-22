@@ -38,7 +38,7 @@ const Animal = () => {
   }, []);
 
   const fetchAnimals = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/animals/all')
+    axios.get(`${import.meta.env.VITE_APP_BASE_URL}/v1/animals/all`)
       .then(response => {
         setAnimals(response.data);
         setFilteredAnimals(response.data);
@@ -49,7 +49,7 @@ const Animal = () => {
   };
 
   const fetchCustomers = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/customers/all')
+    axios.get(`${import.meta.env.VITE_APP_BASE_URL}/v1/customers/all`)
       .then(response => {
         setCustomers(response.data);
       })
@@ -80,7 +80,7 @@ const Animal = () => {
 
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`https://veterinary-management-system.onrender.com/v1/animals/delete/${id}`)
+      axios.delete(`${import.meta.env.VITE_APP_BASE_URL}/v1/animals/delete/${id}`)
         .then(response => {
           setAnimals(animals.filter(animal => animal.id !== id));
           setFilteredAnimals(filteredAnimals.filter(animal => animal.id !== id));
@@ -126,7 +126,7 @@ const Animal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('https://veterinary-management-system.onrender.com/v1/animals/save', formData)
+    axios.post(`${import.meta.env.VITE_APP_BASE_URL}/v1/animals/save`, formData)
       .then(response => {
         fetchAnimals();
         setFormData({
@@ -147,7 +147,7 @@ const Animal = () => {
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`https://veterinary-management-system.onrender.com/v1/animals/update/${selectedAnimalId}`, updateFormData)
+    axios.put(`${import.meta.env.VITE_APP_BASE_URL}/v1/animals/update/${selectedAnimalId}`, updateFormData)
       .then(response => {
         noti("Animal updated successfully!", "success");
         fetchAnimals();

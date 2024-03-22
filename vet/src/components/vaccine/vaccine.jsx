@@ -37,7 +37,7 @@ const Vaccine = () => {
   }, []);
 
   const fetchVaccines = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/vaccines/all')
+    axios.get(`${import.meta.env.VITE_APP_BASE_URL}/v1/vaccines/all`)
       .then(response => {
         setVaccines(response.data);
       })
@@ -47,7 +47,7 @@ const Vaccine = () => {
   };
 
   const fetchReports = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/reports/all')
+    axios.get(`${import.meta.env.VITE_APP_BASE_URL}/v1/reports/all`)
       .then(response => {
         setReports(response.data);
       })
@@ -57,7 +57,7 @@ const Vaccine = () => {
   };
 
   const fetchAnimals = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/animals/all')
+    axios.get(`${import.meta.env.VITE_APP_BASE_URL}/v1/animals/all`)
       .then(response => {
         setanimals(response.data);
       })
@@ -69,7 +69,7 @@ const Vaccine = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`https://veterinary-management-system.onrender.com/v1/vaccines/delete/${id}`)
+      axios.delete(`${import.meta.env.VITE_APP_BASE_URL}/v1/vaccines/delete/${id}`)
         .then(response => {
           setVaccines(vaccines.filter(vaccine => vaccine.id !== id));
           noti("Vaccine removed successfully!", "success");
@@ -105,7 +105,7 @@ const Vaccine = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('https://veterinary-management-system.onrender.com/v1/vaccines/save', formData)
+    axios.post(`${import.meta.env.VITE_APP_BASE_URL}/v1/vaccines/save`, formData)
       .then(response => {
         fetchVaccines();
         setFormData({
@@ -127,7 +127,7 @@ const Vaccine = () => {
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`https://veterinary-management-system.onrender.com/v1/vaccines/update/${selectedvaccineId}`, updateFormData)
+    axios.put(`${import.meta.env.VITE_APP_BASE_URL}/v1/vaccines/update/${selectedvaccineId}`, updateFormData)
       .then(response => {
         fetchVaccines();
         setUpdateFormData({  

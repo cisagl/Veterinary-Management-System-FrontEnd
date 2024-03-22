@@ -29,7 +29,7 @@ const Customer = () => {
   }, []);
 
   const fetchCustomers = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/customers/all')
+    axios.get(`${import.meta.env.VITE_APP_BASE_URL}/v1/customers/all`)
       .then(response => {
         setCustomers(response.data);
         setSearchResult(response.data);
@@ -42,7 +42,7 @@ const Customer = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`https://veterinary-management-system.onrender.com/v1/customers/delete/${id}`)
+      axios.delete(`${import.meta.env.VITE_APP_BASE_URL}/v1/customers/delete/${id}`)
         .then(response => {
           setCustomers(customers.filter(customer => customer.id !== id));
           noti("Customer removed successfully!", "success");
@@ -77,7 +77,7 @@ const Customer = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('https://veterinary-management-system.onrender.com/v1/customers/save', formData)
+    axios.post(`${import.meta.env.VITE_APP_BASE_URL}/v1/customers/save`, formData)
       .then(response => {
         fetchCustomers();
         setFormData({
@@ -96,7 +96,7 @@ const Customer = () => {
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`https://veterinary-management-system.onrender.com/v1/customers/update/${selectedCustomerId}`, {
+    axios.put(`${import.meta.env.VITE_APP_BASE_URL}/v1/customers/update/${selectedCustomerId}`, {
       name: formData.nameUpdate,
       phone: formData.phoneUpdate,
       address: formData.addressUpdate,
@@ -128,7 +128,7 @@ const Customer = () => {
   const searchByName = (e) => {
     e.preventDefault();
     if (search !== '') {
-      axios.get(`https://veterinary-management-system.onrender.com/v1/customers/name?name=${search}`)
+      axios.get(`${import.meta.env.VITE_APP_BASE_URL}/v1/customers/name?name=${search}`)
         .then(response => {
           if (Array.isArray(response.data)) {
             setSearchResult(response.data);

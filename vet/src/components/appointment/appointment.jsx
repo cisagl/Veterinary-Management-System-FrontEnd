@@ -32,7 +32,7 @@ const Appointment = () => {
   }, []);
 
   const fetchappointments = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/appointments/all')
+    axios.get(`${import.meta.env.VITE_APP_BASE_URL}/v1/appointments/all`)
       .then(response => {
         setappointments(response.data);
       })
@@ -42,7 +42,7 @@ const Appointment = () => {
   };
 
   const fetchAnimals = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/animals/all')
+    axios.get(`${import.meta.env.VITE_APP_BASE_URL}/v1/animals/all`)
       .then(response => {
         setanimals(response.data);
       })
@@ -52,7 +52,7 @@ const Appointment = () => {
   };
 
   const fetchDoctors = () => {
-    axios.get('https://veterinary-management-system.onrender.com/v1/doctors/all')
+    axios.get(`${import.meta.env.VITE_APP_BASE_URL}/v1/doctors/all`)
       .then(response => {
         setdoctors(response.data);
       })
@@ -64,7 +64,7 @@ const Appointment = () => {
   const handleDelete = (id) => {
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
-      axios.delete(`https://veterinary-management-system.onrender.com/v1/appointments/delete/${id}`)
+      axios.delete(`${import.meta.env.VITE_APP_BASE_URL}/v1/appointments/delete/${id}`)
         .then(response => {
           setappointments(appointments.filter(appointment => appointment.id !== id));
           noti("Appointment removed successfully!", "success");
@@ -98,7 +98,7 @@ const Appointment = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('https://veterinary-management-system.onrender.com/v1/appointments/save', formData)
+    axios.post(`${import.meta.env.VITE_APP_BASE_URL}/v1/appointments/save`, formData)
       .then(response => {
         fetchappointments();
         setFormData({
@@ -115,7 +115,7 @@ const Appointment = () => {
   
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`https://veterinary-management-system.onrender.com/v1/appointments/update/${selectedappointmentId}`, updateFormData)
+    axios.put(`${import.meta.env.VITE_APP_BASE_URL}/v1/appointments/update/${selectedappointmentId}`, updateFormData)
       .then(response => {
         fetchappointments();
         setUpdateFormData({  
