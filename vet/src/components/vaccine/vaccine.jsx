@@ -127,7 +127,7 @@ const Vaccine = () => {
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
-    axios.put(`https://veterinary-management-system.onrender.com/${selectedvaccineId}`, updateFormData)
+    axios.put(`https://veterinary-management-system.onrender.com/v1/vaccines/update/${selectedvaccineId}`, updateFormData)
       .then(response => {
         fetchVaccines();
         setUpdateFormData({  
