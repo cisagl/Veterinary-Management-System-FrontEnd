@@ -77,6 +77,7 @@ const Animal = () => {
   };
 
   const handleDelete = (id) => {
+    console.log(id);
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
       axios.delete(`https://veterinary-management-system.onrender.com/v1/animals/delete/${id}`)
