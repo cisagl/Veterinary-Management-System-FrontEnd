@@ -76,7 +76,8 @@ const Animal = () => {
     }
   };
 
-  const onDelete = (id) => {
+  const handleDelete = (id) => {
+
     const isConfirmed = window.confirm("Are you sure?");
     if (isConfirmed) {
       axios.delete(`https://veterinary-management-system.onrender.com/v1/animals/delete/${id}`)
@@ -91,7 +92,7 @@ const Animal = () => {
     }
   };
 
-  const onUpdateClick  = (id) => {
+  const handleUpdateClick = (id) => {
     setSelectedAnimalId(id);
     const selectedAnimal = animals.find(animal => animal.id === id);
     if (selectedAnimal) {
@@ -205,8 +206,8 @@ const Animal = () => {
                   <td>{item.dateOfBirth}</td>
                   <td>{item.color}</td>
                   <td>{item.customer.name}</td>
-                  <td><button className='remove' onClick={() => onDelete(item.id)}><IoIosRemoveCircle /></button></td>
-                  <td><button className='update' onClick={() => onUpdateClick(item.id)}><FaRegEdit /></button></td>
+                  <td><button className='remove' onClick={() => handleDelete(item.id)}><IoIosRemoveCircle /></button></td>
+                  <td><button className='update' onClick={() => handleUpdateClick(item.id)}><FaRegEdit /></button></td>
                 </tr>
               ))
             }

@@ -187,8 +187,8 @@ const Customer = () => {
               <td>{item.mail}</td>
               <td>{item.address}</td>
               <td>{item.city}</td>
-              <td><button className='remove' onClick={() => onDelete(item.id)}><IoIosRemoveCircle /></button></td>
-              <td><button className='update' onClick={() => onUpdateClick(item.id)}><FaRegEdit /></button></td>
+              <td><button className='remove' onClick={() => handleDelete(item.id)}><IoIosRemoveCircle /></button></td>
+              <td><button className='update' onClick={() => handleUpdateClick(item.id)}><FaRegEdit /></button></td>
             </tr>
           ))}
           </tbody>
